@@ -166,7 +166,7 @@ class FrozenLakeEnv(Env):
         map_name="4x4",
         is_slippery=True,
     ):
-        if desc is None and map_name is None:
+        if desc is None and map_name is None:=
             desc = generate_random_map()
         elif desc is None:
             desc = MAPS[map_name]
@@ -201,7 +201,13 @@ class FrozenLakeEnv(Env):
             newstate = to_s(newrow, newcol)
             newletter = desc[newrow, newcol]
             terminated = bytes(newletter) in b"GH"
-            reward = float(newletter == b"G")
+            # reward = float(newletter == b"G")
+            if newletter == b"G":
+                reward = 1.0
+            elif newletter == b"H":
+                reward = -1.0
+            else:
+                reward = -0.04
             return newstate, reward, terminated
 
         for row in range(nrow):
